@@ -12,9 +12,9 @@ DEP=$(SRC:.cpp=.d)
 
 CXXFLAGS+=$(DEP_FLAGS)
 
-all: Program
+all: otest
 
-Program: $(OBJ)
+otest: $(OBJ)
 	$(CXX) $(LFLAGS) $(OBJ) -o $@
 
 .PHONY: clean run
@@ -22,12 +22,12 @@ Program: $(OBJ)
 #.SILENT: clean
 
 clean:
-	@rm -f Program $(OBJ) $(DEP)
+	@rm -f otest $(OBJ) $(DEP)
 
-run: Program
-	@./Program
-valgrind: Program
-	@valgrind --leak-check=full ./Program
-gdb: Program
-	@gdb ./Program
+run: otest
+	@./otest
+valgrind: otest
+	@valgrind --leak-check=full ./otest
+gdb: otest
+	@gdb ./otest
 -include $(DEP)
