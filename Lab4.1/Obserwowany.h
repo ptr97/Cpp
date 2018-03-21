@@ -6,10 +6,10 @@ class Obserwowany
 {
 public:
 	virtual void noweDaneNadeszly(const int dane);
-	virtual void dodajObserwatora(Obserwator * nowyObserwator);
+	virtual void dodajObserwatora(ObserwatorBaza * nowyObserwator);
 
 private:
-	std::vector<Obserwator *> m_obserwatorzy;
+	std::vector<ObserwatorBaza *> m_obserwatorzy;
 };
 
 void Obserwowany::noweDaneNadeszly(const int dane)
@@ -18,7 +18,7 @@ void Obserwowany::noweDaneNadeszly(const int dane)
 		m_obserwatorzy[i]->PrzetwarzajDane(dane);
 }
 
-void Obserwowany::dodajObserwatora(Obserwator * nowyObserwator)
+void Obserwowany::dodajObserwatora(ObserwatorBaza * nowyObserwator)
 {
 	m_obserwatorzy.push_back(nowyObserwator);
 }
