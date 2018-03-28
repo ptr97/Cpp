@@ -23,8 +23,7 @@ public:
 	List();
 	List(const List & oldList);
 	~List();
-	List & operator=(const List & list);
-	List & insert(const DataBase & data, int insertPlace = 1);
+	List & insert(const DataBase & data, int insertPlace = End);
 	void print() const;
 	bool find(const DataBase & data) const;
 
@@ -48,7 +47,6 @@ List::~List()
 		{
 			lastNode = iter;
 			iter = iter->m_next;
-
 		}
 
 		delete iter->m_data;
