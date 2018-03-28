@@ -140,8 +140,11 @@ bool List::find(const DataBase & data) const
 	while(iter)
 	{
 		if(iter->m_data->equal(&data))
+		{
 			ifFound = true;
-		
+			break;
+		}
+	
 		iter = iter->m_next;
 	}
 
