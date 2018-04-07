@@ -1,10 +1,15 @@
 CXX = g++
-CXXFLAGS = -g -Wall -Wextra -pedantic -O0
+CXXFLAGS = -g -Wall -Wextra -pedantic -O0 $(GXX_FLAGS)
 CXXFLAGS += -std=c++11
+
+DEP_FLAGS = -MMD -MP
+
+CXXFLAGS += $(DEP_FLAGS)
 
 SRC = $(wildcard *.cpp)
 HDR = $(wildcard *.h)
 OBJ = $(SRC:.cpp=.o)
+DEP = $(SRC:.cpp=.d)
 
 APP = Program
 ZIP = $(APP).zip
@@ -14,7 +19,7 @@ all: $(APP)
 rebuild: clean $(APP)
 
 $(APP): $(OBJ)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+	$(CXX) $(LFLAGS) $^ -o $@ 
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -36,6 +41,8 @@ gdb: $(APP)
 	@gdb ./$(APP)
 
 clean: 
-	@rm -f $(APP) $(OBJ)
+	@rm -f $(APP) $(OBJ) $(DEP)
 
-.PHONY: all rebuild zip run crun valgrind gdb clean
+.PHONY: all rebuild zip run crun valgrind gdb clean plot
+
+-include $(DEP)
