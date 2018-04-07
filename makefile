@@ -12,7 +12,7 @@ OBJ = $(SRC:.cpp=.o)
 DEP = $(SRC:.cpp=.d)
 
 APP = Program
-ZIP = $(APP).zip
+ZIP = $(APP).tgz
 
 all: $(APP)
 
