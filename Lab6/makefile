@@ -1,33 +1,41 @@
-CXX=g++
-CXXFLAGS+=-std=c++11 -Wall -Wextra -pedantic -O0 $(GXX_FLAGS)
-CXXFLAGS+=-g
+CXX = g++
+CXXFLAGS = -g -Wall -Wextra -pedantic -O0
+CXXFLAGS += -std=c++11
 
-DEP_FLAGS=-MMD
+SRC = $(wildcard *.cpp)
+HDR = $(wildcard *.h)
+OBJ = $(SRC:.cpp=.o)
 
-DEP_FLAGS+=-MP
+APP = Program
+ZIP = $(APP).zip
 
-SRC=$(wildcard *.cpp)
-OBJ=$(SRC:.cpp=.o)
-DEP=$(SRC:.cpp=.d)
+all: $(APP)
 
-CXXFLAGS+=$(DEP_FLAGS)
+rebuild: clean $(APP)
 
-all: mtest
+$(APP): $(OBJ)
+	$(CXX) $^ -o $@ $(LDFLAGS)
 
-mtest: $(OBJ)
-	$(CXX) $(LFLAGS) $(OBJ) -o $@
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-.PHONY: clean run
+zip: $(SRC) $(HDR)
+	tar czf $(ZIP) $^ makefile
 
-#.SILENT: clean
+run: $(APP)
+	@./$(APP)
 
-clean:
-	@rm -f mtest $(OBJ) $(DEP)
+crun: $(APP)
+	@clear
+	@./$(APP)
 
-run: mtest
-	@./mtest
-valgrind: mtest
-	@valgrind --leak-check=full ./mtest
-gdb: mtest
-	@gdb ./mtest
--include $(DEP)
+valgrind: $(APP)
+	@valgrind --leak-check=full ./$(APP)
+
+gdb: $(APP)
+	@gdb ./$(APP)
+
+clean: 
+	@rm -f $(APP) $(OBJ)
+
+.PHONY: all rebuild zip run crun valgrind gdb clean
