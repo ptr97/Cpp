@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
     m::moje_obliczenia(1); // wyrzuca wyjatek typu numerical_exception
   } catch (...) {
     cout << "obsluga" << endl;
-    myexcept::handler("oblicznia z zrg. 1");
+    myexcept::handler("oblicznia z arg. 1");
   }
 
   try {
@@ -84,7 +84,7 @@ runtime_error: double value overflow
 runtime_error: cos nie tak z obliczeniami
 numerical_exception: znow cos nie tak z obliczeniami
 obsluga
-plik: moje_obliczenia.C linia: 6 kontekst: (oblicznia z zrg. 1) numerical exception:  nieporzadany zakres argumentow 0 a mniejszy niz 2 
+plik: moje_obliczenia.C linia: 6 kontekst: (oblicznia z arg. 1) numerical exception:  nieporzadany zakres argumentow 0 a mniejszy niz 2 
 obsluga
 plik: moje_obliczenia.C linia: 7 kontekst: (obliczenia z arg. 4) calculation exception:  argument nie moze byc podzielny przez dwa 
 obsluga
