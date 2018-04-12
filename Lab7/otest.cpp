@@ -14,13 +14,12 @@
 #include "Obserwowany.h"
 #include "Obserwator.h"
 
-class DaneOdUsera : public Obserwowany 
-{
+class DaneOdUsera : public Obserwowany {
 public:
-  DaneOdUsera() : m_licznik(0) {}
+  DaneOdUsera()
+    : m_licznik(0) {}
   
-  void odczytaj( int x) 
-  {
+  void odczytaj( int x) {
     m_dane[m_licznik] = x;
     ++m_licznik;
     noweDaneNadeszly(x);
@@ -31,18 +30,15 @@ private:
   int m_licznik;  
 };
 
-class Generator : public Obserwowany 
-{
+class Generator : public Obserwowany {
 public:
-  Generator(int init) : m_c(init) {}
-
-  int nastepna() 
-  {  
+  Generator(int init)
+    : m_c(init) {}
+  int nastepna() {  
     noweDaneNadeszly(m_c);
     m_c++;
     return m_c - 1;
   }
-  
 private:
   int m_c;
 };
