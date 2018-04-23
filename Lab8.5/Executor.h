@@ -5,25 +5,25 @@
 namespace Executor
 {
 
-class Function
-{
-public:
-	virtual double operator()(double x) const = 0;
-	virtual ~Function() {}
-};
+	class Function
+	{
+	public:
+		virtual double operator()(double x) const = 0;
+		virtual ~Function() {}
+	};
 
 
-class Result
-{
-public:
-	Result(const double val = 0) : value(val) {} 
-	operator double() const;
+	class Result
+	{
+	public:
+		Result(const double val = 0) : value(val) {} 
+		operator double() const;
 
-	double value;
-	bool valid = false;
-};
+		double value;
+		bool valid = false;
+	};
 
-Result secureRun(const Function & fun, const double x);
+	Result secureRun(const Function & fun, const double x);
 
 }
 
