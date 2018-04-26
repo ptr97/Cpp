@@ -20,7 +20,7 @@ namespace myerrors
 
 	private:
 		const std::runtime_error * m_err;
-		std::string m_fileName;
+		const std::string m_fileName;
 		const int m_line;
 	};
 
