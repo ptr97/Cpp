@@ -1,27 +1,31 @@
-// Nazwa pliku wykonywalnego: Lista
+// Nazwa pliku wykonywalnego: Potegi
 
 // Prosze dopisac kod, dodac nowe pliki, tak aby program wykonywal
 // sie, a wynik jego dzialania byl taki sam jak podany na końcu tego
 // pliku.
 
-// UWAGA
-// Do rozwiazania zadanie nie wolno wykorzystywac nic z biblioteki
-// standardowej oprocz cout i endl
+// UWAGA!
+// Wszystkie obliczenia powinny wykonywac sie na etapie
+// kompilacji. Jezeli obliczenia nie beda wykonywane w czasie
+// kompilacji, rozwiazanie bedzie nie na temat, a wiec zostanie
+// ocenione na 0 punktow.
 
-// Prosze napisac szablon listy (ktory dzialal jak lista) w ktorej
-// bedzie mozna przechowywal wskazniki na obiekty tego samego typu i
-// ktory bedzie dalo sie wykorzystac dla dowolnego typu wskaznikow.
+// UWAGA!
+// Po odkomentowaniu ERROR powinien pojawic sie blad kompilacji, ktory
+// w swoim komunikacie bedzie zawieral tresc
+// "TooLargeNumberMustBeSmallerThan10".
 
-// UWAGA
-// Prosze zwrocic uwage na zarzadzanie pamiecia.
+// Prosze napisac szablon Power, ktory na etapie kompilacji oblicza
+// potege danej liczby. Podstawy poteg jak i wykladniki sa liczbami
+// calkowitymi, ktore moga przyjmowac wartosci dodatnie i ujemne. W
+// przypadku podania wykladnika potegi rownego conajmniej 10, powinien
+// pojawic sie blad kompilacji z informacja, ze wykladnik jest zbyt
+// duzy.
 
-// Pliku Main.cpp nie wolno modyfikowac.
-
-// Komentarze w kodzie informuja jaki tekst na ekranie wypisuje dana
-// linia kodu.
+// Pliku Main.cpp, nie wolno modyfikowac.
 
 // Ostateczny program powinien byc przyjazny dla programisty (miec
-// czytelny i dobrze napisany kod).
+// czytelny i dobrze napisany kod). 
 
 // Program nalezy kompilowac z flagami -Wall -g.
 
@@ -35,90 +39,29 @@
 // Rozwiazanie (czyli dodane pliki, makefile i Main.cpp) nalezy
 // wgrac do UPEL.
 
-
+#include"Main.h"
 #include<iostream>
 
-#include"list"
-#include"list"
+// #define ERROR
 
 int main ()
 {
-  std::cout<<"===== PRIMES =====\n"; // ===== PRIMES =====
-  agh::list<int*> integers;
-  integers.push_back(new int (1));
-  integers.push_back(new int (2));
-  integers.push_back(new int (3));
-  integers.push_back(new int (5));
-  integers.push_back(new int (7));
-  integers.push_back(new int (11));
+  std::cout<<"Values\n";
+  std::cout<<"3^4 = "<<Power<3, 4>::Value<<"\n";
+  std::cout<<"3^(-4) = "<<Power<3, -4>::Value<<"\n";
+  std::cout<<"4^0 = "<<Power<4, 0>::Value<<"\n";
+  std::cout<<"(-2)^3 = "<<Power<-2, 3>::Value<<"\n";
 
-  std::cout<<"--- Print list ---\n"; // --- Print list ---
-  integers.print();		// 1, 2, 3, 5, 7, 11
-
-  std::cout<<"--- Loop print ---\n"; // --- Loop print ---
-  const agh::list<int*>::iterator integersEnd = integers.end();
-  for (agh::list<int*>::iterator integersIter = integers.begin(); integersIter != integersEnd; ++integersIter)
-    std::cout<<**integersIter<<"\n";
-
-
-  std::cout<<"\n===== STRINGS =====\n"; // ===== STRINGS =====
-  agh::list<std::string*> strings;
-  strings.push_back(new std::string ("guitar"));
-  strings.push_back(new std::string ("violin"));
-  strings.push_back(new std::string ("harp"));
-  strings.push_back(new std::string ("cello"));
-  strings.push_back(new std::string ("piano"));
-  strings.push_back(new std::string ("lyre"));
-
-  std::cout<<"--- Print list ---\n"; // --- Print list ---
-  strings.print();		// guitar, violin, harp, cello, piano, lyre
-
-  std::cout<<"--- Loop print ---\n"; // --- Loop print ---
-  const agh::list<std::string*>::iterator stringsEnd = strings.end();
-  agh::list<std::string*>::iterator stringsIter = strings.begin();
-  do {
-    std::cout<<**stringsIter<<"\n";
-  } while (++stringsIter != stringsEnd);
-
-
-  std::cout<<"\n===== UNORDERED =====\n"; // ===== UNORDERED =====
-  agh::list<int*> integersDifferent;
-  integersDifferent.push_back(new int (3));
-  integersDifferent.push_back(new int (2));
-  integersDifferent.push_back(new int (1));
-  integersDifferent.push_back(new int (11));
-  integersDifferent.push_back(new int (5));
-  integersDifferent.push_back(new int (7));
-
-  std::cout<<"Print list\n";	// Print list
-  integersDifferent.print();	// 3, 2, 1, 11, 5, 7
+#ifdef ERROR
+  std::cout<<"1^10 = "<<Power<1, 10>::Value<<"\n";
+#endif
 
   return 0;
 }
 /*
-===== PRIMES =====
---- Print list ---
-1, 2, 3, 5, 7, 11
---- Loop print ---
-1
-2
-3
-5
-7
-11
-
-===== STRINGS =====
---- Print list ---
-guitar, violin, harp, cello, piano, lyre
---- Loop print ---
-guitar
-violin
-harp
-cello
-piano
-lyre
-
-===== UNORDERED =====
-Print list
-3, 2, 1, 11, 5, 7
+Values
+3^4 = 81
+3^(-4) = 0
+4^0 = 1
+(-2)^3 = -8
 */

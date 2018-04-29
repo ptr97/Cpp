@@ -1,26 +1,8 @@
-// Nazwa pliku wykonywalnego: Potegi
+// Nazwa pliku wykonywalnego: Mortal
 
 // Prosze dopisac kod, dodac nowe pliki, tak aby program wykonywal
 // sie, a wynik jego dzialania byl taki sam jak podany na końcu tego
 // pliku.
-
-// UWAGA!
-// Wszystkie obliczenia powinny wykonywac sie na etapie
-// kompilacji. Jezeli obliczenia nie beda wykonywane w czasie
-// kompilacji, rozwiazanie bedzie nie na temat, a wiec zostanie
-// ocenione na 0 punktow.
-
-// UWAGA!
-// Po odkomentowaniu ERROR powinien pojawic sie blad kompilacji, ktory
-// w swoim komunikacie bedzie zawieral tresc
-// "TooLargeNumberMustBeSmallerThan10".
-
-// Prosze napisac szablon Power, ktory na etapie kompilacji oblicza
-// potege danej liczby. Podstawy poteg jak i wykladniki sa liczbami
-// calkowitymi, ktore moga przyjmowac wartosci dodatnie i ujemne. W
-// przypadku podania wykladnika potegi rownego conajmniej 10, powinien
-// pojawic sie blad kompilacji z informacja, ze wykladnik jest zbyt
-// duzy.
 
 // Pliku Main.cpp, nie wolno modyfikowac.
 
@@ -36,32 +18,119 @@
 // ani zadnych innych materialow (w tym wlasnych wczesniej
 // przygotowanych plikow oprocz makefile)
 
+// UWAGA!
+// Wolno korzystac z dokumentacji biblioteki standardowej:
+// http://www.sgi.com/tech/stl/table_of_contents.html
+
 // Rozwiazanie (czyli dodane pliki, makefile i Main.cpp) nalezy
 // wgrac do UPEL.
 
 #include"Main.h"
+#include<set>
+#include<list>
+#include <vector>
 #include<iostream>
-
-// #define ERROR
+#include <cstring>
 
 int main ()
 {
-  std::cout<<"Values\n";
-  std::cout<<"3^4 = "<<Power<3, 4>::Value<<"\n";
-  std::cout<<"3^(-4) = "<<Power<3, -4>::Value<<"\n";
-  std::cout<<"4^0 = "<<Power<4, 0>::Value<<"\n";
-  std::cout<<"(-2)^3 = "<<Power<-2, 3>::Value<<"\n";
+  const int studentsNumber = 6;
+  char name[20];
+  Student array [studentsNumber];
+  strcpy (name, "Sub-zero");
+  array[0].SetName(name);
 
-#ifdef ERROR
-  std::cout<<"1^10 = "<<Power<1, 10>::Value<<"\n";
-#endif
+  strcpy (name, "Scorpion");
+  array[1].SetName(name);
 
+  strcpy (name, "Liu Kang");
+  array[2].SetName(name);
+
+  strcpy (name, "Raiden");
+  array[3].SetName(name);
+
+  strcpy (name, "Goro");
+  array[4].SetName(name);
+
+  strcpy (name, "Agent Lee");
+  array[5].SetName(name);
+
+  std::cout<<"----- VECTOR -----\n";
+  std::vector<Student> studentsVector (array, array + studentsNumber);
+  StudentsClass::PrintStudents(studentsVector);
+  std::cout<<"\n";
+
+  std::cout<<"----- NORMAL -----\n";
+  std::set<Student> normal;
+  normal.insert(array, array + studentsNumber);
+  StudentsClass::PrintStudents(normal);
+  std::cout<<"\n";
+
+  std::cout<<"----- REVERSE -----\n";
+  std::set<Student, ReverseOrder> reverse;
+  reverse.insert(array, array + studentsNumber);
+  StudentsClass::PrintStudents(reverse);
+  std::cout<<"\n";
+
+  std::cout<<"----- LIST -----\n";
+  std::list<Student> studentsList = StudentsClass::MakeList(normal);
+  studentsList.push_back(array[5]);
+  studentsList.push_back(array[0]);
+  studentsList.push_front(array[0]);
+  StudentsClass::PrintStudents(studentsList);
+  std::cout<<"\n";
+
+  std::cout<<"----- SET FROM LIST -----\n";
+  std::set<Student> fromList;
+  fromList.insert(studentsList.begin(), studentsList.end());
+  StudentsClass::PrintStudents(fromList);
+    
   return 0;
 }
 /*
-Values
-3^4 = 81
-3^(-4) = 0
-4^0 = 1
-(-2)^3 = -8
+----- VECTOR -----
+I am Sub-zero.
+I am Scorpion.
+I am Liu Kang.
+I am Raiden.
+I am Goro.
+I am Agent Lee.
+
+----- NORMAL -----
+I am Agent Lee.
+I am Goro.
+I am Raiden.
+I am Liu Kang.
+I am Scorpion.
+I am Sub-zero.
+
+----- REVERSE -----
+I am Sub-zero.
+I am Scorpion.
+I am Liu Kang.
+I am Raiden.
+I am Goro.
+I am Agent Lee.
+
+----- LIST -----
+I am Sub-zero.
+I am Agent Lee.
+I am Goro.
+I am Raiden.
+I am Liu Kang.
+I am Scorpion.
+I am Sub-zero.
+I am Agent Lee.
+I am Sub-zero.
+
+----- SET FROM LIST -----
+I am Sub-zero.
+I am Agent Lee.
+I am Sub-zero.
+I am Scorpion.
+I am Liu Kang.
+I am Raiden.
+I am Goro.
+I am Agent Lee.
+I am Sub-zero.
 */
