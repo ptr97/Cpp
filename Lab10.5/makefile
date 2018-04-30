@@ -11,7 +11,7 @@ HDR = $(wildcard *.h)
 OBJ = $(SRC:.cpp=.o)
 DEP = $(SRC:.cpp=.d)
 
-APP = Program
+APP = Lista
 ZIP = $(APP).tgz
 
 all: $(APP)
