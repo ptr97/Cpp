@@ -1,61 +1,61 @@
-/*
-  Celem zadania jest napisanie szablona generatora ciagow.
-  Dowolny ciag niech bedzie zadany przez poczatkowa wartosc i funkcje inkrementujaca.
-  
-  Szablon posiada pare przydatnych operatorow i trzeba pamietac skladnie deklaracji wskaznika do funkcji.
+/* W zadaniu nalezy napisac szablon klasy Array ze specjalizacja dla wskaznikow.
+   Specjalizacja wp³ywa na kilka aspektow dzialna tego szablonu. W szczegolscnosci na to co robi   destruktor szablonu Array (czy kasuje obiekty, czy nie). Zmieniaja sie takze operator[] i operator <<.
+   Klasa X jest trywialnie prosta: przechowuje napis, dostarcza metody dostepowej i podczas destrukcji wypisuje ten napis.
+   Klasa Y dziedziczy po X.
  */
 
 #include <iostream>
-#include "generator"
+#include <stdexcept>
+#include "Array.h"
 
-int plus1(int prev) {
-  return prev+1;
-}
-
-int minus1(int prev) {
-  return prev-1;
-}
-
-
-float mult2( float prev) {
-  return prev*3.;
-}
-
-char cyclicNext(char prev) {
-  if ( prev == 'z' )
-    return 'a';
-  return prev+1;
-}
+#include "X.h"
 
 
 int main() {
-  generator<int> g(0, plus1);
-  for ( size_t i = 0; i < 10; ++i, ++g ) {
-    std::cout << g.current() << " ";
-  } 
-  g.reset(g.current(), minus1);
-  while ( g > 0 ) {
-    std::cout << g.current() << " ";
-    ++g;
-  } 
-  std::cout << std::endl;
-  
-  generator<float> gm(1.5, mult2);
-  for ( ; gm < 100 ; ++gm )    
-    std::cout << gm.current() << " ";
-  std::cout << std::endl;
-  
-  generator<char> alpha('a', cyclicNext);
-  for ( size_t i = 0; i < 100; ++i ) {
-    std::cout  << alpha.next() << "";
+  {
+    Array<7, int> iArray;
+    iArray[0] = 0;
+    iArray[1] = 8;
+    iArray[3] = 6;
+    try {
+      iArray[7] = 0; // operacja poza zakresem
+    } catch (const std::invalid_argument& e) {
+      std::cout << e.what() << std::endl; 
+    }
+    std::cout << iArray << std::endl;
   }
-  std::cout << std::endl;
-  alpha.reset();
-  std::cout << alpha.current() << std::endl;
+
+  {
+    Array<4, X> xArray;
+    xArray[0] = X("a0");
+    xArray[2] = X("a2");
+    
+    std::cout << xArray << std::endl;
+  }
+  {
+    Array<5, X*> xPtrArray;
+    xPtrArray[0] = new X("obj 0 ");
+    xPtrArray[1] = new X("obj 1 ");
+    xPtrArray[2] = new X("obj 2 ");
+    xPtrArray[3] = new Y("obj Y 0 ");
+    std::cout << xPtrArray << std::endl;
+  }  
 }
 /* wynik
-0 1 2 3 4 5 6 7 8 9 10 9 8 7 6 5 4 3 2 1 
-1.5 4.5 13.5 40.5 
-bcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvw
-a
+Indeks poza zakresem
+0 8 0 6 0 0 0 
+deleting X a0
+deleting X a2
+a0  a2  
+deleting X 
+deleting X a2
+deleting X 
+deleting X a0
+obj 0  obj 1  obj 2  obj Y 0  
+deleting X obj 0 
+deleting X obj 1 
+deleting X obj 2 
+deleting Y obj Y 0 
+deleting X obj Y 0 
+
  */
