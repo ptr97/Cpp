@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -g -Wall -Wextra -pedantic -O0 $(GXX_FLAGS)
-CXXFLAGS += -std=c++11
+CXXFLAGS += -std=c++03
 
 DEP_FLAGS = -MMD -MP
 
@@ -11,7 +11,7 @@ HDR = $(wildcard *.h)
 OBJ = $(SRC:.cpp=.o)
 DEP = $(SRC:.cpp=.d)
 
-APP = Mortal
+APP = vtest
 ZIP = $(APP).tgz
 
 all: $(APP)
