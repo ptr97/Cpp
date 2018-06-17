@@ -1,0 +1,1 @@
+stol 90 90 180 "Stol" stol 90 90 180 "Stol z fornirowanym blatem" Szafa 200 90 16 "Ubraniowka" 

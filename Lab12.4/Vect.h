@@ -31,12 +31,11 @@ private:
 
 ///////////////////////////////////////////////////////
 
-template <typename U, bool flag>
+template <typename U, bool isPod>
 struct SwapHelper
 {
 	static void swap(U & a, U & b) {}
 };
-
 
 template <typename U>
 struct SwapHelper<U, false>
